@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>VMuliadi Audacious Music Controller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <style type="text/css">
+    td {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    button.btn {
+        border: 0;
+        width: 25%;
+        border-radius: 0;
+        font-weight: bold;
+        padding-top: 7.5px;
+        padding-bottom: 7.5px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid" style="padding: 30px;">
+        <div class="col">
+            <h1 class="row">VMuliadi Audacious Web Controller</h1>
+            <div class="row">
+                <div class="btn-group" role="group" style="width: 100%; padding-top: 15px; padding-bottom: 15px;">
+                    <button id="song-info" type="button" id="info" class="btn btn-primary">INFO</button>
+                    <button id="song-play" type="button" id="play" class="btn btn-info">PLAY</button>
+                    <button id="song-pause" type="button" id="pause" class="btn btn-warning">PAUSE</button>
+                    <button id="song-stop" type="button" id="stop" class="btn btn-danger">STOP</button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Action</td>
+                            <td>Filename</td>
+                            <td>Duration</td>
+                            <td>Bit Rate</td>
+                            <td>Channels</td>
+                            <td>Frequency</td>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#song-info").click(function() {
+            $.ajax({
+                url: "http://192.168.100.16:5000/",
+                success: function(result) {
+                    response = JSON.parse(JSON.stringify(result));
+                    $("#table-body").append("<tr><td>" + response.message +
+                        "</td><td>" + response.filename + "</td><td>" +
+                        response.played_time + "</td><td>" + response.bit_rate +
+                        "</td><td>" + response.channels + "</td><td>" +
+                        response.frequency + "</td></tr>")
+                }
+            });
+        });
+
+        $("#song-play").click(function() {
+            $.ajax({
+                url: "http://192.168.100.16:5000/play",
+                success: function(result) {
+                    response = JSON.parse(JSON.stringify(result));
+                    $("#table-body").append("<tr><td>" + response.message +
+                        "</td><td>" + response.filename + "</td><td>" +
+                        response.played_time + "</td><td>" + response.bit_rate +
+                        "</td><td>" + response.channels + "</td><td>" +
+                        response.frequency + "</td></tr>")
+                }
+            });
+        });
+
+        $("#song-pause").click(function() {
+            $.ajax({
+                url: "http://192.168.100.16:5000/pause",
+                success: function(result) {
+                    response = JSON.parse(JSON.stringify(result));
+                    $("#table-body").append("<tr><td>" + response.message +
+                        "</td><td>" + response.filename + "</td><td>" +
+                        response.played_time + "</td><td>" + response.bit_rate +
+                        "</td><td>" + response.channels + "</td><td>" +
+                        response.frequency + "</td></tr>")
+                }
+            });
+        });
+
+        $("#song-stop").click(function() {
+            $.ajax({
+                url: "http://192.168.100.16:5000/stop",
+                success: function(result) {
+                    response = JSON.parse(JSON.stringify(result));
+                    $("#table-body").append("<tr><td>" + response.message +
+                        "</td><td>" + response.filename + "</td><td>" +
+                        response.played_time + "</td><td>" + response.bit_rate +
+                        "</td><td>" + response.channels + "</td><td>" +
+                        response.frequency + "</td></tr>")
+                }
+            });
+        });
+    })
+    </script>
+</body>
+
+</html>
